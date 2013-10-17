@@ -1,5 +1,6 @@
 class github {
-  package { ['curl','tar']: }
+  require curl
+  require tar
 }
 
 define github::tarball (
@@ -18,7 +19,6 @@ define github::tarball (
   exec { "${title}::download_and_extract":
     command => "curl -sSL \"${github_url}\" | tar -C \"${extract_to}\" --strip-components=1 --no-same-owner -xzf -",
     path    => ['/usr/local/bin', '/bin', '/usr/bin'],
-    require => Exec["${title}::ensure::path"],
     creates => $creates,
   }
 }
