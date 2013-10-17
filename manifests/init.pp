@@ -6,6 +6,7 @@ define github::tarball (
   $extract_to = undef,
   $repo       = $title,
   $ref        = 'master',
+  $creates    = undef,
 ) {
   require github
 
@@ -18,5 +19,6 @@ define github::tarball (
     command => "curl -sSL \"${github_url}\" | tar -C \"${extract_to}\" --strip-components=1 --no-same-owner -xzf -",
     path    => ['/usr/local/bin', '/bin', '/usr/bin'],
     require => Exec["${title}::ensure::path"],
+    creates => $creates,
   }
 }
